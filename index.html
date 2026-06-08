@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Домашняя кухня | Еда с любовью</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header>
+<div class="container">
+<div class="logo">
+<h1>❤️ Домашняя кухня</h1>
+<p>Еда, приготовленная с любовью</p>
+</div>
+<nav>
+<ul>
+<li><a href="index.html" class="active">Главная</a></li>
+<li><a href="menu.html">Меню</a></li>
+<li><a href="about.html">О нас</a></li>
+<li><a href="booking.html">Бронирование</a></li>
+<li><a href="contacts.html">Контакты</a></li>
+</ul>
+</nav>
+<div class="header-right">
+<a href="cart.html" class="cart-btn-header">🛒 <span class="cart-badge" id="cart-n">0</span></a>
+<div class="contact-info">
+<p>📞 +7 (495) 123-45-67</p>
+<p>📧 info@domashnyaya-kuhnya.ru</p>
+</div>
+<a href="admin.html" class="admin-header-btn">⚙️ Админка</a>
+</div>
+</div>
+</header>
+
+<section class="hero">
+<div class="container">
+<h1 class="script">Еда, приготовленная с любовью</h1>
+<p>Настоящая домашняя кухня, где каждое блюдо готовится с заботой и теплом</p>
+<a href="booking.html" class="btn btn-primary">Забронировать столик</a>
+<a href="menu.html" class="btn">Наше меню</a>
+</div>
+</section>
+
+<section class="promotions">
+<div class="container">
+<h2 class="section-title">Наши акции</h2>
+<div class="promotions-grid">
+<div class="promotion-card">
+<div class="promo-icon">🎂</div>
+<h3>День рождения</h3>
+<p>Скидка 15% на весь заказ для именинников!</p>
+<span class="promo-badge">-15%</span>
+</div>
+<div class="promotion-card">
+<div class="promo-icon">🥣</div>
+<h3>Семейный обед</h3>
+<p>Борщ + пельмени + десерт всего за 690₽ по будням</p>
+<span class="promo-badge">690₽</span>
+</div>
+<div class="promotion-card">
+<div class="promo-icon">🍳</div>
+<h3>Домашний завтрак</h3>
+<p>Блины с творогом и чай — с 8:00 до 11:00</p>
+<span class="promo-badge">Утро</span>
+</div>
+</div>
+</div>
+</section>
+
+<section>
+<div class="container">
+<h2 class="section-title">Популярные блюда</h2>
+<div class="dishes-grid">
+<div class="dish-card">
+<img src="images/borsh.jpg" alt="Борщ" class="dish-image">
+<div class="dish-info">
+<h3>Борщ по-домашнему</h3>
+<p>Настоящий борщ с говядиной и сметаной</p>
+<div class="dish-actions">
+<span class="dish-price">320 ₽</span>
+<button class="add-to-cart-btn" onclick="addToCart(3)">В корзину</button>
+</div>
+</div>
+</div>
+<div class="dish-card">
+<img src="images/pelmeni.jpg" alt="Пельмени" class="dish-image">
+<div class="dish-info">
+<h3>Пельмени с говядиной</h3>
+<p>Домашние пельмени ручной лепки</p>
+<div class="dish-actions">
+<span class="dish-price">350 ₽</span>
+<button class="add-to-cart-btn" onclick="addToCart(4)">В корзину</button>
+</div>
+</div>
+</div>
+<div class="dish-card">
+<img src="images/chizkek.jpg" alt="Чизкейк" class="dish-image">
+<div class="dish-info">
+<h3>Нью-Йорк чизкейк</h3>
+<p>Классический чизкейк с ягодным соусом</p>
+<div class="dish-actions">
+<span class="dish-price">290 ₽</span>
+<button class="add-to-cart-btn" onclick="addToCart(6)">В корзину</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<section class="reviews">
+<div class="container">
+<h2 class="section-title">Отзывы гостей</h2>
+<div class="reviews-grid">
+<div class="review-card">
+<div class="review-rating">⭐⭐⭐⭐⭐</div>
+<p class="review-text">«Заказывала борщ — вкус как у бабушки! Теперь заказываю регулярно»</p>
+<p class="review-author">— Анна Петрова, Москва</p>
+</div>
+<div class="review-card">
+<div class="review-rating">⭐⭐⭐⭐⭐</div>
+<p class="review-text">«Пельмени просто невероятные! Моя семья в восторге»</p>
+<p class="review-author">— Михаил Соколов, Москва</p>
+</div>
+<div class="review-card">
+<div class="review-rating">⭐⭐⭐⭐⭐</div>
+<p class="review-text">«Заказывала торт на день рождения — все гости были в восторге!»</p>
+<p class="review-author">— Елена Козлова, Москва</p>
+</div>
+</div>
+</div>
+</section>
+
+<footer>
+<div class="container">
+<div class="footer-grid">
+<div class="footer-col">
+<h3>❤️ Домашняя кухня</h3>
+<p>Еда, приготовленная с любовью в самом сердце Москвы</p>
+</div>
+<div class="footer-col">
+<h3>Быстрые ссылки</h3>
+<ul>
+<li><a href="menu.html">Меню</a></li>
+<li><a href="about.html">О нас</a></li>
+<li><a href="booking.html">Бронирование</a></li>
+<li><a href="contacts.html">Контакты</a></li>
+</ul>
+</div>
+<div class="footer-col">
+<h3>Контакты</h3>
+<p>г. Москва, ул. Тверская, д. 15</p>
+<p>+7 (495) 123-45-67</p>
+<p>info@domashnyaya-kuhnya.ru</p>
+</div>
+<div class="footer-col">
+<h3>Документы</h3>
+<ul>
+<li><a href="privacy.html">Политика конфиденциальности</a></li>
+<li><a href="terms.html">Пользовательское соглашение</a></li>
+<li><a href="data-policy.html">Политика обработки данных</a></li>
+<li><a href="dev-docs.html">Документация разработчика</a></li>
+</ul>
+</div>
+</div>
+<div class="footer-bottom">
+<p>&copy; 2026 Домашняя кухня. Все права защищены. Сделано с ❤️</p>
+</div>
+</div>
+</footer>
+<script src="data.js"></script>
+<script>updateCartBadge();</script>
+</body>
+</html>

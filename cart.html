@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Корзина — Домашняя кухня</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header>
+<div class="container">
+<div class="logo"><h1>❤️ Домашняя кухня</h1><p>Еда с любовью</p></div>
+<nav><ul>
+<li><a href="index.html">Главная</a></li>
+<li><a href="menu.html">Меню</a></li>
+<li><a href="about.html">О нас</a></li>
+<li><a href="booking.html">Бронирование</a></li>
+<li><a href="contacts.html">Контакты</a></li>
+</ul></nav>
+<a href="cart.html" class="cart-nav">🛒 Корзина <span class="cart-badge" id="hdr-count" style="display:flex">0</span></a>
+</div>
+</header>
+
+<section class="page-header">
+<div class="container">
+<h1>Корзина</h1>
+<p>Ваш заказ из «Домашней кухни»</p>
+</div>
+</section>
+
+<section class="cart-section">
+<div class="container">
+<div class="cart-wrap">
+<div>
+<div class="card">
+<div class="card-title">🍽️ Состав заказа</div>
+<div id="cart-list"></div>
+</div>
+</div>
+<div>
+<div class="card" id="summary-card" style="display:none">
+<div class="card-title">💰 Итого</div>
+<div id="summary-rows"></div>
+<div class="sum-total"><span>К оплате:</span><span id="total-price">0 ₽</span></div>
+</div>
+<div class="card" id="order-card" style="display:none">
+<div class="success-box" id="success-box">
+<div style="font-size:60px;margin-bottom:14px">🎉</div>
+<h3>Заказ принят!</h3>
+<p>Мы свяжемся с вами для подтверждения.<br>Спасибо, что выбрали Домашнюю кухню! ❤️</p>
+<a href="menu.html" class="go-menu" style="margin-top:20px">← Вернуться в меню</a>
+</div>
+<div id="form-wrap">
+<div class="card-title">📝 Ваши данные</div>
+<label class="form-label">Имя *</label>
+<input class="form-input" id="f-name" type="text" placeholder="Как вас зовут?">
+<label class="form-label">Телефон *</label>
+<input class="form-input" id="f-phone" type="tel" placeholder="+7 (___) ___-__-__">
+<label class="form-label">Email</label>
+<input class="form-input" id="f-email" type="email" placeholder="для чека">
+<label class="form-label">Тип заказа</label>
+<select class="form-input" id="f-type">
+<option value="dine">🍽️ В кафе</option>
+<option value="takeaway">🥡 Самовывоз</option>
+<option value="delivery">🚗 Доставка</option>
+</select>
+<label class="form-label">Способ оплаты *</label>
+<div class="payment-grid">
+<label class="pay-option selected" id="pay-cash" onclick="selectPay('cash')"><input type="radio" name="pay" checked><div style="font-size:24px">💵</div><div class="pay-label">Наличные</div></label>
+<label class="pay-option" id="pay-card" onclick="selectPay('card')"><input type="radio"><div style="font-size:24px">💳</div><div class="pay-label">Карта</div></label>
+<label class="pay-option" id="pay-sbp" onclick="selectPay('sbp')"><input type="radio"><div style="font-size:24px">⚡</div><div class="pay-label">СБП</div></label>
+<label class="pay-option" id="pay-online" onclick="selectPay('online')"><input type="radio"><div style="font-size:24px">📱</div><div class="pay-label">Онлайн</div></label>
+</div>
+<label class="form-label">Комментарий</label>
+<textarea class="form-input" id="f-comment" placeholder="Пожелания к заказу..."></textarea>
+<button class="btn-order" id="order-btn" onclick="placeOrder()">✅ Оформить заказ</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<footer>
+<div class="container"><div class="footer-bottom"><p>&copy; 2026 Домашняя кухня</p></div></div>
+</footer>
+
+<script src="data.js"></script>
+<script>
+let selectedPay = 'cash';
+const payLabels = { cash: 'Наличные', card: 'Банковская карта', sbp: 'СБП', online: 'Онлайн' };
+
+function selectPay(method) {
+  selectedPay = method;
+  ['cash','card','sbp','online'].forEach(m => {
+    const el = document.getElementById('pay-' + m);
+    if (el) el.classList.toggle('selected', m === method);
+  });
+}
+
+function renderCartPage() {
+  const cart = getCart();
+  const listEl = document.getElementById('cart-list');
+  const sumCard = document.getElementById('summary-card');
+  const orderCard = document.getElementById('order-card');
+  updateCartBadge();
+
+  if (!cart.length) {
+    listEl.innerHTML = '<div class="empty-cart"><div style="font-size:64px;margin-bottom:16px">🛒</div><h3>Корзина пуста</h3><p>Добавьте блюда из меню</p><a href="menu.html" class="go-menu">Перейти в меню</a></div>';
+    sumCard.style.display = 'none';
+    orderCard.style.display = 'none';
+    return;
+  }
+  sumCard.style.display = 'block';
+  orderCard.style.display = 'block';
+  listEl.innerHTML = cart.map(item => {
+    const img = item.image ? '<img src="' + item.image + '" onerror="this.style.display=\'none\'">' : '🍽️';
+    return '<div class="cart-item"><div class="ci-img">' + img + '</div><div class="ci-info"><div class="ci-name">' + item.name + '</div><div class="ci-price">' + item.price.toLocaleString('ru') + ' ₽ / шт.</div><div class="qty-wrap"><button class="qty-btn" onclick="changeQty(' + item.id + ',-1)">−</button><span class="qty-num">' + item.qty + '</span><button class="qty-btn" onclick="changeQty(' + item.id + ',1)">+</button></div></div><div style="text-align:right"><span class="ci-total" style="font-weight:700">' + (item.price*item.qty).toLocaleString('ru') + ' ₽</span><br><button style="background:none;border:none;color:#ccc;cursor:pointer;font-size:18px;margin-top:8px" onclick="removeFromCart(' + item.id + ');renderCartPage()">🗑</button></div></div>';
+  }).join('');
+  const total = cart.reduce((s,i) => s + i.price * i.qty, 0);
+  const count = cart.reduce((s,i) => s + i.qty, 0);
+  document.getElementById('summary-rows').innerHTML = '<div class="sum-row"><span>Блюд:</span><span>' + count + ' шт.</span></div><div class="sum-row"><span>Стоимость:</span><span>' + total.toLocaleString('ru') + ' ₽</span></div>';
+  document.getElementById('total-price').textContent = total.toLocaleString('ru') + ' ₽';
+}
+
+function changeQty(id, delta) {
+  updateQty(id, delta);
+  const cart = getCart();
+  const item = cart.find(c => c.id == id);
+  if (item && item.qty <= 0) removeFromCart(id);
+  renderCartPage();
+}
+
+async function placeOrder() {
+  const name = document.getElementById('f-name').value.trim();
+  const phone = document.getElementById('f-phone').value.trim();
+  if (!name) { alert('Укажите имя'); return; }
+  if (!phone) { alert('Укажите телефон'); return; }
+  const btn = document.getElementById('order-btn');
+  btn.disabled = true; btn.textContent = '⏳ Оформляем...';
+  const cart = getCart();
+  const total = cart.reduce((s,i) => s + i.price * i.qty, 0);
+  const orderData = {
+    name, phone,
+    email: document.getElementById('f-email').value.trim(),
+    type: document.getElementById('f-type').value,
+    payment: selectedPay,
+    paymentLabel: payLabels[selectedPay],
+    comment: document.getElementById('f-comment').value.trim(),
+    items: cart.map(i => ({ id: i.id, name: i.name, price: i.price, qty: i.qty })),
+    total,
+    itemsCount: cart.reduce((s,i) => s + i.qty, 0)
+  };
+  try {
+    const { saveOrder } = await import('./firebase-db.js');
+    await saveOrder(orderData);
+  } catch (e) {
+    const orders = JSON.parse(localStorage.getItem('toni_orders') || '[]');
+    orders.push({ ...orderData, id: Date.now() });
+    localStorage.setItem('toni_orders', JSON.stringify(orders));
+  }
+  saveCart([]);
+  document.getElementById('form-wrap').style.display = 'none';
+  document.getElementById('success-box').style.display = 'block';
+  document.getElementById('summary-card').style.display = 'none';
+  document.getElementById('cart-list').innerHTML = '';
+}
+
+renderCartPage();
+</script>
+</body>
+</html>

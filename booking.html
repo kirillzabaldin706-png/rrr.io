@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Бронирование — Домашняя кухня</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header>
+<div class="container">
+<div class="logo"><h1>❤️ Домашняя кухня</h1><p>Еда с любовью</p></div>
+<nav>
+<ul>
+<li><a href="index.html">Главная</a></li>
+<li><a href="menu.html">Меню</a></li>
+<li><a href="about.html">О нас</a></li>
+<li><a href="booking.html" class="active">Бронирование</a></li>
+<li><a href="contacts.html">Контакты</a></li>
+</ul>
+</nav>
+<div class="header-right">
+<a href="cart.html" class="cart-btn-header">🛒 <span class="cart-badge" id="cart-n">0</span></a>
+<a href="admin.html" class="admin-header-btn">⚙️ Админка</a>
+</div>
+</div>
+</header>
+
+<section class="page-header">
+<div class="container">
+<h1>Бронирование столика</h1>
+<p>Забронируйте столик онлайн или по телефону</p>
+</div>
+</section>
+
+<section class="booking-section">
+<div class="container">
+<div class="booking-container">
+<h2>Заполните форму для бронирования</h2>
+<form id="bookingForm">
+<div class="form-group">
+<label for="name">Ваше имя *</label>
+<input type="text" id="name" required placeholder="Иван Иванов">
+</div>
+<div class="form-row">
+<div class="form-group">
+<label for="phone">Телефон *</label>
+<input type="tel" id="phone" placeholder="+7 (___) ___-__-__" required maxlength="18">
+<div class="error-message" id="phoneError">Введите корректный номер телефона</div>
+</div>
+<div class="form-group">
+<label for="email">Email</label>
+<input type="email" id="email" placeholder="example@email.ru">
+</div>
+</div>
+<div class="form-row">
+<div class="form-group">
+<label for="date">Дата *</label>
+<input type="date" id="date" required>
+</div>
+<div class="form-group">
+<label for="time">Время *</label>
+<input type="time" id="time" required>
+</div>
+</div>
+<div class="form-row">
+<div class="form-group">
+<label for="guests">Количество гостей *</label>
+<select id="guests" required>
+<option value="">Выберите...</option>
+<option value="1">1 человек</option>
+<option value="2">2 человека</option>
+<option value="3">3 человека</option>
+<option value="4">4 человека</option>
+<option value="5">5 человек</option>
+<option value="6">6 человек</option>
+<option value="7+">7 и более</option>
+</select>
+</div>
+<div class="form-group">
+<label for="zone">Зона</label>
+<select id="zone">
+<option value="">Любая</option>
+<option value="main">Основной зал</option>
+<option value="family">Семейная зона</option>
+</select>
+</div>
+</div>
+<div class="form-group">
+<label for="comment">Дополнительные пожелания</label>
+<textarea id="comment" rows="4" placeholder="Праздник, аллергии, особые пожелания..."></textarea>
+</div>
+<div class="checkbox-group">
+<input type="checkbox" id="terms" required>
+<label for="terms">Я согласен с <a href="privacy.html" style="color:var(--primary)">политикой конфиденциальности</a></label>
+</div>
+<button type="submit" class="btn btn-primary" style="width:100%;border:none;margin:0">Забронировать столик</button>
+</form>
+</div>
+</div>
+</section>
+
+<section class="booking-section" style="padding-top:0">
+<div class="container">
+<h2 class="section-title">Важная информация</h2>
+<div class="info-grid">
+<div class="info-item">
+<div class="info-icon">⏰</div>
+<h3>Режим работы</h3>
+<p>Пн-Пт: 9:00 - 21:00</p>
+<p>Сб-Вс: 10:00 - 22:00</p>
+</div>
+<div class="info-item">
+<div class="info-icon">💰</div>
+<h3>Депозит</h3>
+<p>Предоплата не требуется</p>
+<p>Для групп от 6 человек — по договорённости</p>
+</div>
+<div class="info-item">
+<div class="info-icon">🚫</div>
+<h3>Отмена</h3>
+<p>Бесплатная отмена за 2 часа до визита</p>
+</div>
+</div>
+</div>
+</section>
+
+<footer>
+<div class="container">
+<div class="footer-bottom"><p>&copy; 2026 Домашняя кухня · +7 (495) 123-45-67</p></div>
+</div>
+</footer>
+
+<script src="data.js"></script>
+<script>
+updateCartBadge();
+const phoneInput = document.getElementById('phone');
+phoneInput.addEventListener('input', function(e) {
+  let digits = e.target.value.replace(/\D/g, '');
+  if (digits.length > 11) digits = digits.slice(0, 11);
+  if (digits !== '' && digits[0] !== '7') digits = '7' + digits.slice(0, 10);
+  let formatted = '';
+  if (digits.length > 0) formatted = '+7';
+  if (digits.length > 1) formatted += ' (' + digits.slice(1, 4);
+  if (digits.length >= 4) formatted += ') ' + digits.slice(4, 7);
+  if (digits.length >= 7) formatted += '-' + digits.slice(7, 9);
+  if (digits.length >= 9) formatted += '-' + digits.slice(9, 11);
+  e.target.value = formatted;
+  validatePhone();
+});
+function validatePhone() {
+  const ok = /^\+7 \(\d{3}\) \d{3}-\d{2}-\d{2}$/.test(phoneInput.value);
+  document.getElementById('phoneError').style.display = phoneInput.value && !ok ? 'block' : 'none';
+  phoneInput.classList.toggle('error', phoneInput.value && !ok);
+  return ok || !phoneInput.value;
+}
+document.getElementById('date').setAttribute('min', new Date().toISOString().split('T')[0]);
+document.getElementById('bookingForm').addEventListener('submit', async function(e) {
+  e.preventDefault();
+  if (!validatePhone()) { phoneInput.focus(); return; }
+  const btn = this.querySelector('button[type=submit]');
+  btn.disabled = true; btn.textContent = 'Отправляем...';
+  const data = {
+    name: document.getElementById('name').value.trim(),
+    phone: document.getElementById('phone').value.trim(),
+    email: document.getElementById('email').value.trim(),
+    date: document.getElementById('date').value,
+    time: document.getElementById('time').value,
+    guests: document.getElementById('guests').value,
+    zone: document.getElementById('zone').value,
+    comment: document.getElementById('comment').value.trim()
+  };
+  try {
+    const { saveBooking } = await import('./firebase-db.js');
+    await saveBooking(data);
+    this.reset();
+    btn.textContent = '✅ Бронирование отправлено!';
+    btn.style.background = 'linear-gradient(135deg,#27ae60,#2ecc71)';
+    setTimeout(() => { btn.disabled = false; btn.textContent = 'Забронировать столик'; btn.style.background = ''; }, 4000);
+  } catch (err) {
+    btn.disabled = false; btn.textContent = 'Забронировать столик';
+    alert('Ошибка. Проверьте интернет или позвоните нам: +7 (495) 123-45-67');
+  }
+});
+</script>
+</body>
+</html>

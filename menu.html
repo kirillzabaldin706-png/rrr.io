@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Меню — Домашняя кухня</title>
+<link rel="stylesheet" href="style.css">
+<script>
+window._menuItems = [];
+window._addToCart = function(itemId) { addToCart(itemId); };
+</script>
+<script src="data.js"></script>
+</head>
+<body>
+<header>
+<div class="container">
+<div class="logo"><h1>❤️ Домашняя кухня</h1><p>Еда с любовью</p></div>
+<nav>
+<ul>
+<li><a href="index.html">Главная</a></li>
+<li><a href="menu.html" class="active">Меню</a></li>
+<li><a href="about.html">О нас</a></li>
+<li><a href="booking.html">Бронирование</a></li>
+<li><a href="contacts.html">Контакты</a></li>
+</ul>
+</nav>
+<div class="header-right">
+<a href="cart.html" class="cart-btn-header">🛒 <span class="cart-badge" id="nav-cart-count">0</span></a>
+<a href="admin.html" class="admin-header-btn">⚙️ Админка</a>
+</div>
+</div>
+</header>
+
+<section class="page-header">
+<div class="container">
+<h1>Наше меню</h1>
+<p>Домашние блюда с любовью — только свежие ингредиенты</p>
+</div>
+</section>
+
+<div id="menu-loading" style="text-align:center;padding:80px 20px;font-size:18px;color:var(--primary)">⏳ Загружаем меню...</div>
+<div id="menu-container"></div>
+
+<footer>
+<div class="container">
+<div class="footer-grid">
+<div class="footer-col"><h3>Домашняя кухня</h3><p>Еда с любовью</p></div>
+<div class="footer-col"><h3>Навигация</h3><ul>
+<li><a href="index.html">Главная</a></li>
+<li><a href="about.html">О нас</a></li>
+<li><a href="booking.html">Бронирование</a></li>
+<li><a href="contacts.html">Контакты</a></li>
+</ul></div>
+<div class="footer-col"><h3>Документы</h3><ul>
+<li><a href="privacy.html">Политика конфиденциальности</a></li>
+<li><a href="terms.html">Пользовательское соглашение</a></li>
+</ul></div>
+</div>
+<div class="footer-bottom"><p>&copy; 2026 Домашняя кухня</p></div>
+</div>
+</footer>
+
+<script>
+function renderMenuPage(menuData) {
+  document.getElementById('menu-loading').style.display = 'none';
+  const container = document.getElementById('menu-container');
+  if (!menuData || !menuData.items || !menuData.items.length) {
+    container.innerHTML = '<div style="text-align:center;padding:60px;color:#999">Меню временно недоступно</div>';
+    return;
+  }
+  window._menuItems = menuData.items;
+  let html = '';
+  (menuData.categories || []).forEach(cat => {
+    const items = menuData.items.filter(i => i.category === cat.id);
+    if (!items.length) return;
+    html += '<section class="menu-section"><div class="container"><h2 class="menu-category">' + (cat.emoji ? cat.emoji + ' ' : '') + cat.name + '</h2><div class="menu-items">';
+    items.forEach(item => {
+      const imgHtml = item.image
+        ? '<img src="' + item.image + '" alt="' + item.name + '" class="menu-item-image" onerror="this.parentElement.innerHTML=\'🍽️\'">'
+        : '<div class="menu-item-img-wrap">' + (cat.emoji || '🍽️') + '</div>';
+      html += '<div class="menu-item">' + (item.image ? '<div class="menu-item-img-wrap">' + imgHtml + '</div>' : imgHtml) +
+        '<div class="menu-item-info"><h3>' + item.name + '</h3><p>' + (item.desc || '') + '</p>' +
+        '<div class="menu-item-price-row"><span class="menu-item-price">' + item.price + ' ₽</span>' +
+        '<button class="add-to-cart-btn" onclick="window._addToCart(' + item.id + ')">+ В корзину</button></div></div></div>';
+    });
+    html += '</div></div></section>';
+  });
+  container.innerHTML = html || '<div style="text-align:center;padding:60px;color:#999">Меню пусто</div>';
+}
+loadMenuFromCloud(renderMenuPage);
+updateCartBadge();
+</script>
+</body>
+</html>

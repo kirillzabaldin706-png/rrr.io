@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Контакты — Домашняя кухня</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header>
+<div class="container">
+<div class="logo"><h1>❤️ Домашняя кухня</h1><p>Еда с любовью</p></div>
+<nav>
+<ul>
+<li><a href="index.html">Главная</a></li>
+<li><a href="menu.html">Меню</a></li>
+<li><a href="about.html">О нас</a></li>
+<li><a href="booking.html">Бронирование</a></li>
+<li><a href="contacts.html" class="active">Контакты</a></li>
+</ul>
+</nav>
+<div class="header-right">
+<a href="cart.html" class="cart-btn-header">🛒 <span class="cart-badge" id="cart-n">0</span></a>
+<a href="admin.html" class="admin-header-btn">⚙️ Админка</a>
+</div>
+</div>
+</header>
+
+<section class="page-header">
+<div class="container">
+<h1>Свяжитесь с нами</h1>
+<p>Закажите домашнюю еду с любовью</p>
+</div>
+</section>
+
+<section class="contacts-section">
+<div class="container">
+<h2 class="section-title">Контактная информация</h2>
+<div class="contacts-grid">
+<div class="contact-card">
+<div class="contact-icon">📍</div>
+<h3>Адрес</h3>
+<p><strong>Домашняя кухня</strong></p>
+<p>г. Москва, ул. Тверская, д. 15, стр. 1</p>
+</div>
+<div class="contact-card">
+<div class="contact-icon">📞</div>
+<h3>Телефон</h3>
+<p><strong>+7 (495) 123-45-67</strong></p>
+<p>+7 (926) 987-65-43</p>
+</div>
+<div class="contact-card">
+<div class="contact-icon">⏰</div>
+<h3>Режим работы</h3>
+<p>Пн-Пт: 9:00 - 21:00</p>
+<p>Сб-Вс: 10:00 - 22:00</p>
+</div>
+<div class="contact-card">
+<div class="contact-icon">✉️</div>
+<h3>Email</h3>
+<p>info@domashnyaya-kuhnya.ru</p>
+</div>
+</div>
+</div>
+</section>
+
+<section class="map-section">
+<div class="container">
+<h2 class="section-title">Как нас найти</h2>
+<iframe class="map-iframe" src="https://yandex.ru/map-widget/v1/?um=construct%3A%2F%2Fymaps%3A1%2F%2Fz%3A15%2F%2Ft%3A1%2F%2Fll%3A37.617635%2C55.755814" allowfullscreen></iframe>
+</div>
+</section>
+
+<section class="form-section">
+<div class="container">
+<div class="form-container">
+<h2>Напишите нам</h2>
+<form id="contactForm">
+<div class="form-row">
+<div class="form-group">
+<label for="name">Ваше имя *</label>
+<input type="text" id="name" required>
+</div>
+<div class="form-group">
+<label for="phone">Телефон *</label>
+<input type="tel" id="phone" placeholder="79991234567" maxlength="11" required>
+</div>
+</div>
+<div class="form-group">
+<label for="email">Email</label>
+<input type="email" id="email">
+</div>
+<div class="form-group">
+<label for="message">Сообщение</label>
+<textarea id="message" rows="4" placeholder="Что бы вы хотели заказать?"></textarea>
+</div>
+<button type="submit" class="btn btn-primary" style="width:100%;border:none;margin:0">Отправить</button>
+</form>
+</div>
+</div>
+</section>
+
+<footer>
+<div class="container">
+<div class="footer-grid">
+<div class="footer-col"><h3>Домашняя кухня</h3><p>Еда с любовью</p></div>
+<div class="footer-col"><h3>Документы</h3><ul>
+<li><a href="privacy.html">Политика конфиденциальности</a></li>
+<li><a href="terms.html">Пользовательское соглашение</a></li>
+<li><a href="data-policy.html">Политика обработки данных</a></li>
+</ul></div>
+</div>
+<div class="footer-bottom"><p>&copy; 2026 Домашняя кухня</p></div>
+</div>
+</footer>
+
+<script src="data.js"></script>
+<script>
+updateCartBadge();
+document.getElementById('phone').addEventListener('input', function() {
+  this.value = this.value.replace(/\D/g, '').slice(0, 11);
+});
+document.getElementById('contactForm').addEventListener('submit', async function(e) {
+  e.preventDefault();
+  const name = document.getElementById('name').value.trim();
+  const phone = document.getElementById('phone').value.trim();
+  const message = document.getElementById('message').value.trim();
+  if (!/^[0-9]{11}$/.test(phone)) { alert('Введите телефон: 11 цифр (79991234567)'); return; }
+  const btn = this.querySelector('button');
+  btn.disabled = true; btn.textContent = 'Отправляем...';
+  try {
+    const { saveBooking } = await import('./firebase-db.js');
+    await saveBooking({ name, phone, message, email: document.getElementById('email').value.trim() });
+    alert('Спасибо, ' + name + '! Мы свяжемся с вами скоро.');
+    this.reset();
+  } catch (err) {
+    alert('Спасибо, ' + name + '! Мы свяжемся с вами по номеру +' + phone + '.');
+    this.reset();
+  }
+  btn.disabled = false; btn.textContent = 'Отправить';
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>О нас — Домашняя кухня</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header>
+<div class="container">
+<div class="logo"><h1>❤️ Домашняя кухня</h1><p>Еда с любовью</p></div>
+<nav>
+<ul>
+<li><a href="index.html">Главная</a></li>
+<li><a href="menu.html">Меню</a></li>
+<li><a href="about.html" class="active">О нас</a></li>
+<li><a href="booking.html">Бронирование</a></li>
+<li><a href="contacts.html">Контакты</a></li>
+</ul>
+</nav>
+<div class="header-right">
+<a href="cart.html" class="cart-btn-header">🛒 <span class="cart-badge" id="cart-n">0</span></a>
+<a href="admin.html" class="admin-header-btn">⚙️ Админка</a>
+</div>
+</div>
+</header>
+
+<section class="page-header">
+<div class="container">
+<h1>О нашей кухне</h1>
+<p>Где каждое блюдо готовится с любовью</p>
+</div>
+</section>
+
+<section class="about-section">
+<div class="container">
+<h2 class="section-title">Наша история</h2>
+<div class="about-content">
+<div class="about-text">
+<p>Всё началось с бабушкиной кухни, где аромат свежей выпечки и вкусного борща наполнял дом теплом и уютом. Мы верим, что настоящая еда — это не просто питание, это способ выразить любовь и заботу.</p>
+<p>Каждое блюдо готовится вручную, с использованием только свежих и качественных ингредиентов. Мы не используем консерванты и искусственные добавки — только натуральные продукты и много любви.</p>
+<p>За годы работы мы стали любимым местом для семейных обедов, уютных ужинов и праздничных застолий. Мы постоянно развиваемся и совершенствуем наши рецепты.</p>
+</div>
+<img src="images/kuhnya.jpg" alt="Наша кухня" class="about-image">
+</div>
+</div>
+</section>
+
+<section class="about-section" style="background:var(--light)">
+<div class="container">
+<h2 class="section-title">Наша философия</h2>
+<div class="features">
+<div class="feature-item">
+<div class="feature-icon">🌱</div>
+<h3>Свежие продукты</h3>
+<p>Только натуральные ингредиенты от проверенных поставщиков</p>
+</div>
+<div class="feature-item">
+<div class="feature-icon">❤️</div>
+<h3>Готовим с любовью</h3>
+<p>Каждое блюдо — как дома, с заботой и вниманием к деталям</p>
+</div>
+<div class="feature-item">
+<div class="feature-icon">👨‍👩‍👧‍👦</div>
+<h3>Семейные рецепты</h3>
+<p>Проверенные временем рецепты, передаваемые из поколения в поколение</p>
+</div>
+<div class="feature-item">
+<div class="feature-icon">🏠</div>
+<h3>Домашний уют</h3>
+<p>Тёплая атмосфера, где каждый гость чувствует себя как дома</p>
+</div>
+</div>
+</div>
+</section>
+
+<section class="about-section">
+<div class="container">
+<h2 class="section-title">Наша команда</h2>
+<div class="team">
+<div class="team-member">
+<img src="images/kuzmin.jpg" alt="Шеф-повар" class="team-photo" onerror="this.style.display='none'">
+<h3>Алексей Кузьмин</h3>
+<span class="team-role">Шеф-повар</span>
+<p>15 лет опыта в домашней кухне. Мастер борща и пельменей.</p>
+</div>
+<div class="team-member">
+<img src="images/pchelkina.jpg" alt="Кондитер" class="team-photo" onerror="this.style.display='none'">
+<h3>Мария Пчёлкина</h3>
+<span class="team-role">Кондитер</span>
+<p>Создаёт невероятные десерты и выпечку по семейным рецептам.</p>
+</div>
+</div>
+<a href="menu.html" class="btn btn-primary" style="display:block;width:fit-content;margin:40px auto 0">Посмотреть меню</a>
+</div>
+</section>
+
+<footer>
+<div class="container">
+<div class="footer-grid">
+<div class="footer-col"><h3>Домашняя кухня</h3><p>Еда с любовью</p></div>
+<div class="footer-col"><h3>Ссылки</h3><ul>
+<li><a href="menu.html">Меню</a></li>
+<li><a href="booking.html">Бронирование</a></li>
+<li><a href="contacts.html">Контакты</a></li>
+</ul></div>
+<div class="footer-col"><h3>Контакты</h3><p>ул. Тверская, 15, Москва</p><p>+7 (495) 123-45-67</p></div>
+</div>
+<div class="footer-bottom"><p>&copy; 2026 Домашняя кухня</p></div>
+</div>
+</footer>
+<script src="data.js"></script>
+<script>updateCartBadge();</script>
+</body>
+</html>
